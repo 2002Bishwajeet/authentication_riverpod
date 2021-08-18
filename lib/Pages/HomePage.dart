@@ -18,11 +18,12 @@ class HomePage extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(data.currentUser!.email as String),
+              child: Text(data.currentUser!.email ?? 'You are logged In'),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(data.currentUser!.displayName as String),
+              child: Text(data.currentUser!.displayName ??
+                  ' Great you have Completed this step'),
             ),
             Container(
               padding: const EdgeInsets.only(top: 48.0),
