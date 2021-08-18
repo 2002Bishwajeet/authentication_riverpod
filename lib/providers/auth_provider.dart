@@ -25,8 +25,14 @@ final authStateProvider = StreamProvider<User?>((ref) {
   return ref.read(authenticationProvider).authStateChange;
 });
 
-//  There are different Types of Provider 
+//  There are different Types of Provider
 //  Provider<T> is the most basic type of provider
 //  FutureProvider<T> which involes a Future
 //  StreamProvider<T> which involves a Stream
 //  and many more. Refer to their docs for more info
+
+//  Creating a firebaseAuthProvider to get some basic details of the loggedIn user
+//  though we can store it in database but for now we will just use it to get the user
+final fireBaseAuthProvider = Provider<FirebaseAuth>((ref) {
+  return FirebaseAuth.instance;
+});
