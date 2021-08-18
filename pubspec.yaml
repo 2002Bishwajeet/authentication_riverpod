@@ -28,6 +28,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^0.14.0+3
+  font_awesome_flutter: ^9.1.0
   google_sign_in: ^5.0.7
 
 dev_dependencies:
