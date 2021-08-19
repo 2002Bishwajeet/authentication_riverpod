@@ -1,7 +1,7 @@
 # Flutter Firebase Authentication Riverpod
 
 This repo contains a sample Flutter application that demonstrates the use of Firebase authentication to a Flutter app using Riverpod as a State management solution
-[Refer to my Medium Blog for detailed explanation]("https://bishwajeet-techmaster.medium.com/firebase-authentication-using-flutter-and-riverpod-f302ab749383")
+[Refer to my Medium Blog for detailed explanation](https://bishwajeet-techmaster.medium.com/firebase-authentication-using-flutter-and-riverpod-f302ab749383)
 
 ## TechStack Used
 
