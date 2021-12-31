@@ -14,13 +14,13 @@ class AuthChecker extends ConsumerWidget {
   //  So if any data changes in the state, the widget will be updated.
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //  now the build method takes a new paramaeter ScopeReader.
     //  this object will be used to access the provider.
 
     //  now the following variable contains an asyncValue so now we can use .when method
     //  to imply the condition
-    final _authState = watch(authStateProvider);
+    final _authState = ref.watch(authStateProvider);
     return _authState.when(
         data: (data) {
           if (data != null) return HomePage();

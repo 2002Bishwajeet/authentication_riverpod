@@ -6,12 +6,12 @@ class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // first variable is to get the data of Authenticated User
-    final data = watch(fireBaseAuthProvider);
+    final data = ref.watch(fireBaseAuthProvider);
 
     //  Second variable to access the Logout Function
-    final _auth = watch(authenticationProvider);
+    final _auth = ref.watch(authenticationProvider);
     return Scaffold(
       body: SafeArea(
         child: Column(
