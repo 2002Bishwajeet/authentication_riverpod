@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentication {
   // For Authentication related functions you need an instance of FirebaseAuth
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //  This getter will be returning a Stream of User object.
   //  It will be used to check if the user is logged in or not.
@@ -31,14 +31,14 @@ class Authentication {
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('Error Occured'),
+          title: const Text('Error Occured'),
           content: Text(e.toString()),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text("OK"))
+                child: const Text("OK"))
           ],
         ),
       );
@@ -57,20 +57,20 @@ class Authentication {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                  title: Text('Error Occured'),
+                  title: const Text('Error Occured'),
                   content: Text(e.toString()),
                   actions: [
                     TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
                         },
-                        child: Text("OK"))
+                        child: const Text("OK"))
                   ]));
     } catch (e) {
       if (e == 'email-already-in-use') {
-        print('Email already in use.');
+        // print('Email already in use.');
       } else {
-        print('Error: $e');
+        // print('Error: $e');
       }
     }
   }
@@ -96,14 +96,14 @@ class Authentication {
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('Error Occured'),
+          title: const Text('Error Occured'),
           content: Text(e.toString()),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text("OK"))
+                child: const Text("OK"))
           ],
         ),
       );

@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Pages/ErrorScreen.dart';
-import 'Pages/LoadingScreen.dart';
-import 'Pages/authChecker.dart';
+import 'Pages/error_screen.dart';
+import 'Pages/loading_screen.dart';
+import 'Pages/auth_checker.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 //  This is a FutureProvider that will be used to check whether the firebase has been initialized or not
@@ -18,14 +18,14 @@ final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //  We will watch this provider to see if the firebase has been initialized
     //  As said this gives async value so it can gives 3 types of results
     //  1. The result is a Future<FirebaseApp>
     //  2. The result is a Future<Error>
     //  3. It's still loading
 
-    final initialize = watch(firebaseinitializerProvider);
+    final initialize = ref.watch(firebaseinitializerProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
@@ -40,9 +40,9 @@ class MyApp extends ConsumerWidget {
       //  the other Two functions speaks for themselves.
       home: initialize.when(
           data: (data) {
-            return AuthChecker(); 
+            return const AuthChecker();
           },
-          loading: () => LoadingScreen(),
+          loading: () => const LoadingScreen(),
           error: (e, stackTrace) => ErrorScreen(e, stackTrace)),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:authentication_riverpod/models/authModel.dart';
+import 'package:authentication_riverpod/models/auth_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

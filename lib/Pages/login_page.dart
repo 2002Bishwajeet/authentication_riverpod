@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         type = Status.signUp;
       });
     }
-    print(type);
+    // print(type);
   }
 
   @override
@@ -78,11 +78,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Consumer(builder: (context, watch, _) {
+        child: Consumer(builder: (context, ref, _) {
           //  Consuming a provider using watch method and storing it in a variable
           //  Now we will use this variable to access all the functions of the
           //  authentication
-          final _auth = watch(authenticationProvider);
+          final _auth = ref.watch(authenticationProvider);
 
           //  Instead of creating a clutter on the onPressed Function
           //  I have decided to create a seperate function and pass them into the
@@ -152,8 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(child: FlutterLogo(size: 81)),
-                        Spacer(flex: 1),
+                        const Center(child: FlutterLogo(size: 81)),
+                        const Spacer(flex: 1),
                         Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 16),
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                             onSaved: (value) {},
                             decoration: InputDecoration(
                               hintText: 'Email address',
-                              hintStyle: TextStyle(color: Colors.black54),
+                              hintStyle: const TextStyle(color: Colors.black54),
                               icon: Icon(Icons.email_outlined,
                                   color: Colors.blue.shade700, size: 24),
                               alignLabelWithHint: true,
@@ -203,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             decoration: InputDecoration(
                               hintText: 'Password',
-                              hintStyle: TextStyle(color: Colors.black54),
+                              hintStyle: const TextStyle(color: Colors.black54),
                               icon: Icon(CupertinoIcons.lock_circle,
                                   color: Colors.blue.shade700, size: 24),
                               alignLabelWithHint: true,
@@ -213,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         if (type == Status.signUp)
                           AnimatedContainer(
-                            duration: Duration(milliseconds: 600),
+                            duration: const Duration(milliseconds: 600),
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 24, vertical: 8),
                             padding: const EdgeInsets.symmetric(
@@ -225,7 +225,8 @@ class _LoginPageState extends State<LoginPage> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: 'Confirm password',
-                                hintStyle: TextStyle(color: Colors.black54),
+                                hintStyle:
+                                    const TextStyle(color: Colors.black54),
                                 icon: Icon(CupertinoIcons.lock_circle,
                                     color: Colors.blue.shade700, size: 24),
                                 alignLabelWithHint: true,
@@ -241,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : null,
                             ),
                           ),
-                        Spacer()
+                        const Spacer()
                       ],
                     ),
                   ),
@@ -250,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
                   flex: 2,
                   child: Container(
                       width: double.infinity,
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Colors.white),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,14 +261,15 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             width: double.infinity,
                             child: _isLoading
-                                ? Center(child: CircularProgressIndicator())
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : MaterialButton(
                                     onPressed: _onPressedFunction,
                                     child: Text(
                                       type == Status.login
                                           ? 'Log in'
                                           : 'Sign up',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w600),
                                     ),
                                     textColor: Colors.blue.shade700,
@@ -286,13 +288,14 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             width: double.infinity,
                             child: _isLoading2
-                                ? Center(child: CircularProgressIndicator())
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : MaterialButton(
                                     onPressed: _loginWithGoogle,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
+                                      children: const [
                                         //  A google icon here
                                         //  an External Package used here
                                         //  Font_awesome_flutter package used
@@ -315,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 24.0),
                             child: RichText(
@@ -323,7 +326,7 @@ class _LoginPageState extends State<LoginPage> {
                                 text: type == Status.login
                                     ? 'Don\'t have an account? '
                                     : 'Already have an account? ',
-                                style: TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
                                       text: type == Status.login

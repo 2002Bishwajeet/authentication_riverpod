@@ -1,10 +1,10 @@
-import 'package:authentication_riverpod/Pages/ErrorScreen.dart';
-import 'package:authentication_riverpod/Pages/HomePage.dart';
-import 'package:authentication_riverpod/Pages/LoadingScreen.dart';
+import 'package:authentication_riverpod/Pages/error_screen.dart';
+import 'package:authentication_riverpod/Pages/home_page.dart';
+import 'package:authentication_riverpod/Pages/loading_screen.dart';
 import 'package:authentication_riverpod/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'LoginPage.dart';
+import 'login_page.dart';
 
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
@@ -14,19 +14,19 @@ class AuthChecker extends ConsumerWidget {
   //  So if any data changes in the state, the widget will be updated.
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //  now the build method takes a new paramaeter ScopeReader.
     //  this object will be used to access the provider.
 
     //  now the following variable contains an asyncValue so now we can use .when method
     //  to imply the condition
-    final _authState = watch(authStateProvider);
+    final _authState = ref.watch(authStateProvider);
     return _authState.when(
         data: (data) {
-          if (data != null) return HomePage();
-          return LoginPage();
+          if (data != null) return const HomePage();
+          return const LoginPage();
         },
-        loading: () => LoadingScreen(),
+        loading: () => const LoadingScreen(),
         error: (e, trace) => ErrorScreen(e, trace));
   }
 }

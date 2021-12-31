@@ -22,6 +22,8 @@ Currently you can login using E-mail and Password or Google sign in.
 
 That's it you are good to go
 
+**NOTE:** Firebase has been setup only for Android devices. To use it on iOS, you need to setup your Firebase project on iOS.
+
 ## Screenshots
 
 <p float = "left">
