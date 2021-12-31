@@ -31,7 +31,7 @@ class HomePage extends ConsumerWidget {
               width: double.infinity,
               child: MaterialButton(
                 onPressed: () => _auth.signOut(),
-                child: Text(
+                child: const Text(
                   'Log Out',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
