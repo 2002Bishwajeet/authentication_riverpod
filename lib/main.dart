@@ -1,49 +1,49 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:authentication_riverpod/pages/home_page.dart';
+import 'package:authentication_riverpod/pages/login_page.dart';
+import 'package:authentication_riverpod/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Pages/error_screen.dart';
-import 'Pages/loading_screen.dart';
+
 import 'Pages/auth_checker.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MainApp()));
 }
 
-//  This is a FutureProvider that will be used to check whether the firebase has been initialized or not
-final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
-  return await Firebase.initializeApp();
-});
+class MainApp extends ConsumerStatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
 
-class MyApp extends ConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    //  We will watch this provider to see if the firebase has been initialized
-    //  As said this gives async value so it can gives 3 types of results
-    //  1. The result is a Future<FirebaseApp>
-    //  2. The result is a Future<Error>
-    //  3. It's still loading
+  ConsumerState<ConsumerStatefulWidget> createState() => _MainAppState();
+}
 
-    final initialize = ref.watch(firebaseinitializerProvider);
+class _MainAppState extends ConsumerState<MainApp> {
+  Future<void> _init(WidgetRef ref) async {
+    //  This is how you can access providers in stateful widgets
+    final user = await ref.read(userProvider.future);
+    if (user != null) {
+      ref.read(userLoggedInProvider.state).state = true;
+    } else {
+      ref.read(userLoggedInProvider.state).state = false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _init(ref);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      //  We will use the initialize to check if the firebase has been initialized
-      //  .when function can only be used with AsysncValue. If you hover over intialize
-      //  you can see what type of variable it is. I have left it dynamic here for your better understanding
-      //  Though it's always recommended to not to use dynamic variables.
-
-      // Now here if the Firebase is initialized we will be redirected to AuthChecker
-      // which checks if the user is logged in or not.
-
-      //  the other Two functions speaks for themselves.
-      home: initialize.when(
-          data: (data) {
-            return const AuthChecker();
-          },
-          loading: () => const LoadingScreen(),
-          error: (e, stackTrace) => ErrorScreen(e, stackTrace)),
+      home: const AuthChecker(),
+      routes: {
+        LoginPage.routename: (context) => const LoginPage(),
+        HomePage.routename: (context) => const HomePage(),
+      },
     );
   }
 }

@@ -1,38 +1,33 @@
-import 'package:authentication_riverpod/models/auth_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:appwrite/models.dart';
+import 'package:authentication_riverpod/providers/client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//  This is how you create a provider in Riverpod. Note the syntax may change in near future.
-//  This is a provider which provides all the features of Authentication class we have created
+import '../api/auth_model.dart';
 
-//  The syntax is pretty simple.
-//  you are using a Class Provider and specifiying the type of provider.
-//  now this takes a function takes a providerreference ref as a parameter
-//  this ref can you used to access a provider within a provider.
-//  if you are not using a provider within a provdier, no worries. It's not compulosry.
-//  you can use a provider without a provider.
+//  So this is where we defined auth providers
 
-final authenticationProvider = Provider<Authentication>((ref) {
-  return Authentication();
+//  Let's have a look at authProvider
+//  you will notice I am consuming another provider within a provider
+//  and its totally ok, there aren't performance issues to this
+//  this authProvider provides an Object of class Authentication
+final authProvider = Provider<Authentication>((ref) {
+  return Authentication(ref.watch(clientProvider));
 });
 
-//  Here I have shared the example of a provider used within a provider.
-// keep in mind I am reading a provider from a provider not watching it.
-//  The docs mention not to use watch in a provider. This is bad for performance
-//  if the data changes conitnously your app will suck bad
-
-final authStateProvider = StreamProvider<User?>((ref) {
-  return ref.read(authenticationProvider).authStateChange;
+///  This is a future Provider which ofc involves a future
+///  we are accessing getAccount here which will either return a User object
+///  if it's logged In and null if it's not
+final userProvider = FutureProvider<User?>((ref) async {
+  return ref.watch(authProvider).getAccount();
 });
 
-//  There are different Types of Provider
-//  Provider<T> is the most basic type of provider
-//  FutureProvider<T> which involes a Future
-//  StreamProvider<T> which involves a Stream
-//  and many more. Refer to their docs for more info
-
-//  Creating a firebaseAuthProvider to get some basic details of the loggedIn user
-//  though we can store it in database but for now we will just use it to get the user
-final fireBaseAuthProvider = Provider<FirebaseAuth>((ref) {
-  return FirebaseAuth.instance;
+/// This is a state provider which is a bit different from the other providers
+///  So this  is a provider which decides which widget to show, either welcome screen
+///  or Home Screen
+///  so think of this like a switch. If the user is logged in show one screen
+///  otherwise show other screen
+/// When the state changes the widget is rebuilt automatically
+///  Keep it null so that we would be able to show the loading screen
+final userLoggedInProvider = StateProvider<bool?>((ref) {
+  return null;
 });

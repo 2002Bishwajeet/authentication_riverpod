@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
           //  Consuming a provider using watch method and storing it in a variable
           //  Now we will use this variable to access all the functions of the
           //  authentication
-          final _auth = ref.watch(authenticationProvider);
+          final auth = ref.watch(authProvider);
 
           //  Instead of creating a clutter on the onPressed Function
           //  I have decided to create a seperate function and pass them into the
@@ -98,28 +98,10 @@ class _LoginPageState extends State<LoginPage> {
             // print(_password.text);
             if (type == Status.login) {
               loading();
-              await _auth
-                  .signInWithEmailAndPassword(
-                      _email.text, _password.text, context)
-                  .whenComplete(
-                      () => _auth.authStateChange.listen((event) async {
-                            if (event == null) {
-                              loading();
-                              return;
-                            }
-                          }));
+              await auth.login(_email.text, _password.text, context);
             } else {
               loading();
-              await _auth
-                  .signUpWithEmailAndPassword(
-                      _email.text, _password.text, context)
-                  .whenComplete(
-                      () => _auth.authStateChange.listen((event) async {
-                            if (event == null) {
-                              loading();
-                              return;
-                            }
-                          }));
+              await auth.signUp(_email.text, _password.text, context);
             }
 
             //  I had said that we would be using a Loading spinner when
@@ -128,16 +110,9 @@ class _LoginPageState extends State<LoginPage> {
             //  Authenticating
           }
 
-          Future<void> _loginWithGoogle() async {
+          Future<void> _loginWithOAuth() async {
             loading2();
-            await _auth
-                .signInWithGoogle(context)
-                .whenComplete(() => _auth.authStateChange.listen((event) async {
-                      if (event == null) {
-                        loading2();
-                        return;
-                      }
-                    }));
+            await auth.loginOAuth('dailymotion', context);
           }
 
           return Form(
@@ -265,13 +240,6 @@ class _LoginPageState extends State<LoginPage> {
                                     child: CircularProgressIndicator())
                                 : MaterialButton(
                                     onPressed: _onPressedFunction,
-                                    child: Text(
-                                      type == Status.login
-                                          ? 'Log in'
-                                          : 'Sign up',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    ),
                                     textColor: Colors.blue.shade700,
                                     textTheme: ButtonTextTheme.primary,
                                     minWidth: 100,
@@ -280,6 +248,13 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(25),
                                       side: BorderSide(
                                           color: Colors.blue.shade700),
+                                    ),
+                                    child: Text(
+                                      type == Status.login
+                                          ? 'Log in'
+                                          : 'Sign up',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ),
                           ),
@@ -291,22 +266,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ? const Center(
                                     child: CircularProgressIndicator())
                                 : MaterialButton(
-                                    onPressed: _loginWithGoogle,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        //  A google icon here
-                                        //  an External Package used here
-                                        //  Font_awesome_flutter package used
-                                        FaIcon(FontAwesomeIcons.google),
-                                        Text(
-                                          ' Login with Google',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
+                                    onPressed: _loginWithOAuth,
                                     textColor: Colors.blue.shade700,
                                     textTheme: ButtonTextTheme.primary,
                                     minWidth: 100,
@@ -315,6 +275,18 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(25),
                                       side: BorderSide(
                                           color: Colors.blue.shade700),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        FaIcon(FontAwesomeIcons.dailymotion),
+                                        Text(
+                                          ' Login with Dailymotion',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ),
                                   ),
                           ),

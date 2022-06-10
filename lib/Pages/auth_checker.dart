@@ -1,32 +1,29 @@
-import 'package:authentication_riverpod/Pages/error_screen.dart';
 import 'package:authentication_riverpod/Pages/home_page.dart';
-import 'package:authentication_riverpod/Pages/loading_screen.dart';
-import 'package:authentication_riverpod/providers/auth_provider.dart';
+import 'package:authentication_riverpod/pages/loading_screen.dart';
+import 'package:authentication_riverpod/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'login_page.dart';
 
+import '../providers/auth_provider.dart';
+
+///   This is [AuthChecker] widget which is used to check if the user is logged in or not
+///  since it depends on [State] we do not need to use navigator to route to widgets
+///  it will automatically change according to the [State].
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
 
-  //  Notice here we aren't using stateless/statefull widget. Instead we are using
-  //  a custom widget that is a consumer of the state.
-  //  So if any data changes in the state, the widget will be updated.
-
+  ///  So here's the thing what we have done
+  ///  if the [_isLoggedIn] is true, we will go to [HomePage]
+  ///  if false we will go to [WelcomePage]
+  /// and if the user is null we will show a [LoadingPage]
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //  now the build method takes a new paramaeter ScopeReader.
-    //  this object will be used to access the provider.
-
-    //  now the following variable contains an asyncValue so now we can use .when method
-    //  to imply the condition
-    final _authState = ref.watch(authStateProvider);
-    return _authState.when(
-        data: (data) {
-          if (data != null) return const HomePage();
-          return const LoginPage();
-        },
-        loading: () => const LoadingScreen(),
-        error: (e, trace) => ErrorScreen(e, trace));
+    final isLoggedIn = ref.watch(userLoggedInProvider.state).state;
+    if (isLoggedIn == true) {
+      return const HomePage(); // It's a simple basic screen showing the home page
+    } else if (isLoggedIn == false) {
+      return const LoginPage(); // It's the intro screen we made
+    }
+    return const LoadingScreen(); // It's a plain screen with a circular progress indicator in Center
   }
 }
