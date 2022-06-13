@@ -27,7 +27,7 @@ class HomePage extends ConsumerWidget {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               width: double.infinity,
               child: MaterialButton(
-                onPressed: () => auth.logout(context),
+                onPressed: () async => await auth.logout(context),
                 textColor: Colors.blue.shade700,
                 textTheme: ButtonTextTheme.primary,
                 minWidth: 100,
