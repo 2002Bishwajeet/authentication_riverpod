@@ -4,6 +4,7 @@ import 'package:authentication_riverpod/Pages/loading_screen.dart';
 import 'package:authentication_riverpod/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'login_page.dart';
 
 class AuthChecker extends ConsumerWidget {
@@ -20,8 +21,8 @@ class AuthChecker extends ConsumerWidget {
 
     //  now the following variable contains an asyncValue so now we can use .when method
     //  to imply the condition
-    final _authState = ref.watch(authStateProvider);
-    return _authState.when(
+    final authState = ref.watch(authStateProvider);
+    return authState.when(
         data: (data) {
           if (data != null) return const HomePage();
           return const LoginPage();

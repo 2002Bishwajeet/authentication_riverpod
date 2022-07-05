@@ -11,7 +11,7 @@ class HomePage extends ConsumerWidget {
     final data = ref.watch(fireBaseAuthProvider);
 
     //  Second variable to access the Logout Function
-    final _auth = ref.watch(authenticationProvider);
+    final auth = ref.watch(authenticationProvider);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -30,11 +30,7 @@ class HomePage extends ConsumerWidget {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               width: double.infinity,
               child: MaterialButton(
-                onPressed: () => _auth.signOut(),
-                child: const Text(
-                  'Log Out',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
+                onPressed: () => auth.signOut(),
                 textColor: Colors.blue.shade700,
                 textTheme: ButtonTextTheme.primary,
                 minWidth: 100,
@@ -42,6 +38,10 @@ class HomePage extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                   side: BorderSide(color: Colors.blue.shade700),
+                ),
+                child: const Text(
+                  'Log Out',
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
             ),
