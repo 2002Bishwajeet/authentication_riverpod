@@ -12,7 +12,7 @@ void main() {
 }
 
 class MainApp extends ConsumerStatefulWidget {
-  const MainApp({Key? key}) : super(key: key);
+  const MainApp({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainAppState();
@@ -22,11 +22,8 @@ class _MainAppState extends ConsumerState<MainApp> {
   Future<void> _init(WidgetRef ref) async {
     //  This is how you can access providers in stateful widgets
     final user = await ref.read(userProvider.future);
-    if (user != null) {
-      ref.read(userLoggedInProvider.state).state = true;
-    } else {
-      ref.read(userLoggedInProvider.state).state = false;
-    }
+
+    ref.read(userLoggedInProvider.notifier).update((state) => user != null);
   }
 
   @override

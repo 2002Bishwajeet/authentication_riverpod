@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:appwrite/appwrite.dart';
@@ -60,8 +62,7 @@ class Authentication {
   }
 
   // A function to login the user with email and password
-  Future<void> login(
-      String email, String password, BuildContext context) async {
+  Future<void> login(String email, String password, BuildContext context) async {
     try {
       ///  here account is the object of Account class and create session
       ///  is a method of Account class which signs in the current user.
@@ -72,7 +73,7 @@ class Authentication {
       ///  if you don't want to see you can comment it out.
       ///  nevermind I did that for you😉
       /// var data = await account.createSession(email: email, password: password);
-      await account.createSession(email: email, password: password);
+      await account.createEmailSession(email: email, password: password);
 
       await Navigator.pushReplacementNamed(context, HomePage.routename);
     } catch (e) {
@@ -94,8 +95,7 @@ class Authentication {
   }
 
   ///  A function to signup the user with email and password
-  Future<void> signUp(
-      String email, String password, BuildContext context) async {
+  Future<void> signUp(String email, String password, BuildContext context) async {
     try {
       //  In this create method is used to signup the user using
       //  email and password
@@ -105,11 +105,10 @@ class Authentication {
       //  I try to signIn using .whenComplete()
       //  this is a function provided by the Future class
       //  to perform an operation when its completed
-      await account.create(
-          email: email, password: password, userId: 'unique()');
+      await account.create(email: email, password: password, userId: ID.unique());
       // We will creating a userId as the email id(UNIQUE)
 
-      await account.createSession(email: email, password: password);
+      await account.createEmailSession(email: email, password: password);
 
       Navigator.pushReplacementNamed(context, HomePage.routename);
     } catch (e) {

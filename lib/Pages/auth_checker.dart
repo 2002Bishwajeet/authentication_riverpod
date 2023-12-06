@@ -10,7 +10,7 @@ import '../providers/auth_provider.dart';
 ///  since it depends on [State] we do not need to use navigator to route to widgets
 ///  it will automatically change according to the [State].
 class AuthChecker extends ConsumerWidget {
-  const AuthChecker({Key? key}) : super(key: key);
+  const AuthChecker({super.key});
 
   ///  So here's the thing what we have done
   ///  if the [_isLoggedIn] is true, we will go to [HomePage]
@@ -18,7 +18,7 @@ class AuthChecker extends ConsumerWidget {
   /// and if the user is null we will show a [LoadingPage]
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoggedIn = ref.watch(userLoggedInProvider.state).state;
+    final isLoggedIn = ref.watch(userLoggedInProvider);
     if (isLoggedIn == true) {
       return const HomePage(); // It's a simple basic screen showing the home page
     } else if (isLoggedIn == false) {

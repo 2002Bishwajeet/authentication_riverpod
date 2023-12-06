@@ -29,7 +29,7 @@ Status type = Status.login;
 
 class LoginPage extends StatefulWidget {
   static const routename = '/LoginPage';
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           //  respective parameters.
           //  if you want you can write the exact code in the onPressed function
           //  it all depends on personal preference and code readability
-          Future<void> _onPressedFunction() async {
+          Future<void> onPressedFunction() async {
             if (!_formKey.currentState!.validate()) {
               return;
             }
@@ -103,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
               loading();
               await auth.signUp(_email.text, _password.text, context);
             }
+            loading();
 
             //  I had said that we would be using a Loading spinner when
             //  some functions are being performed. we need to check if some
@@ -110,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             //  Authenticating
           }
 
-          Future<void> _loginWithOAuth() async {
+          Future<void> loginWithOAuth() async {
             loading2();
             await auth.loginOAuth('dailymotion', context);
           }
@@ -130,13 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                         const Center(child: FlutterLogo(size: 81)),
                         const Spacer(flex: 1),
                         Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 16),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 4),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(25)),
+                          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
                           child: TextFormField(
                             controller: _email,
                             autocorrect: true,
@@ -146,8 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               hintText: 'Email address',
                               hintStyle: const TextStyle(color: Colors.black54),
-                              icon: Icon(Icons.email_outlined,
-                                  color: Colors.blue.shade700, size: 24),
+                              icon: Icon(Icons.email_outlined, color: Colors.blue.shade700, size: 24),
                               alignLabelWithHint: true,
                               border: InputBorder.none,
                             ),
@@ -160,13 +156,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 8),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 4),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(25)),
+                          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
                           child: TextFormField(
                             controller: _password,
                             obscureText: true,
@@ -179,8 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               hintText: 'Password',
                               hintStyle: const TextStyle(color: Colors.black54),
-                              icon: Icon(CupertinoIcons.lock_circle,
-                                  color: Colors.blue.shade700, size: 24),
+                              icon: Icon(CupertinoIcons.lock_circle, color: Colors.blue.shade700, size: 24),
                               alignLabelWithHint: true,
                               border: InputBorder.none,
                             ),
@@ -189,21 +180,15 @@ class _LoginPageState extends State<LoginPage> {
                         if (type == Status.signUp)
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 600),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 8),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 4),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25)),
+                            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
                             child: TextFormField(
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: 'Confirm password',
-                                hintStyle:
-                                    const TextStyle(color: Colors.black54),
-                                icon: Icon(CupertinoIcons.lock_circle,
-                                    color: Colors.blue.shade700, size: 24),
+                                hintStyle: const TextStyle(color: Colors.black54),
+                                icon: Icon(CupertinoIcons.lock_circle, color: Colors.blue.shade700, size: 24),
                                 alignLabelWithHint: true,
                                 border: InputBorder.none,
                               ),
@@ -236,25 +221,20 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             width: double.infinity,
                             child: _isLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const Center(child: CircularProgressIndicator())
                                 : MaterialButton(
-                                    onPressed: _onPressedFunction,
+                                    onPressed: onPressedFunction,
                                     textColor: Colors.blue.shade700,
                                     textTheme: ButtonTextTheme.primary,
                                     minWidth: 100,
                                     padding: const EdgeInsets.all(18),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25),
-                                      side: BorderSide(
-                                          color: Colors.blue.shade700),
+                                      side: BorderSide(color: Colors.blue.shade700),
                                     ),
                                     child: Text(
-                                      type == Status.login
-                                          ? 'Log in'
-                                          : 'Sign up',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
+                                      type == Status.login ? 'Log in' : 'Sign up',
+                                      style: const TextStyle(fontWeight: FontWeight.w600),
                                     ),
                                   ),
                           ),
@@ -263,28 +243,24 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             width: double.infinity,
                             child: _isLoading2
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const Center(child: CircularProgressIndicator())
                                 : MaterialButton(
-                                    onPressed: _loginWithOAuth,
+                                    onPressed: loginWithOAuth,
                                     textColor: Colors.blue.shade700,
                                     textTheme: ButtonTextTheme.primary,
                                     minWidth: 100,
                                     padding: const EdgeInsets.all(18),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25),
-                                      side: BorderSide(
-                                          color: Colors.blue.shade700),
+                                      side: BorderSide(color: Colors.blue.shade700),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
+                                    child: const Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
                                         FaIcon(FontAwesomeIcons.dailymotion),
                                         Text(
                                           ' Login with Dailymotion',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600),
+                                          style: TextStyle(fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
@@ -295,17 +271,12 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.only(bottom: 24.0),
                             child: RichText(
                               text: TextSpan(
-                                text: type == Status.login
-                                    ? 'Don\'t have an account? '
-                                    : 'Already have an account? ',
+                                text: type == Status.login ? 'Don\'t have an account? ' : 'Already have an account? ',
                                 style: const TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
-                                      text: type == Status.login
-                                          ? 'Sign up now'
-                                          : 'Log in',
-                                      style: TextStyle(
-                                          color: Colors.blue.shade700),
+                                      text: type == Status.login ? 'Sign up now' : 'Log in',
+                                      style: TextStyle(color: Colors.blue.shade700),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           _switchType();
